@@ -1,0 +1,28 @@
+{
+  "carMaintainanceApp": {
+    "car": {
+      "home": {
+        "title": "Cars",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Car",
+        "createOrEditLabel": "Create or edit a Car",
+        "notFound": "No Cars found"
+      },
+      "created": "A new Car is created with identifier {{ param }}",
+      "updated": "A Car is updated with identifier {{ param }}",
+      "deleted": "A Car is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Car {{ id }}?"
+      },
+      "detail": {
+        "title": "Car"
+      },
+      "id": "ID",
+      "name": "Name",
+      "model": "Model",
+      "plate": "Plate",
+      "user": "User",
+      "brand": "Brand"
+    }
+  }
+}

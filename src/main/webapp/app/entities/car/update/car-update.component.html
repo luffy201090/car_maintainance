@@ -1,0 +1,85 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-car-heading" data-cy="CarCreateUpdateHeading" jhiTranslate="carMaintainanceApp.car.home.createOrEditLabel">
+        Create or edit a Car
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
+          <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="carMaintainanceApp.car.name" for="field_name">Name</label>
+          <input type="text" class="form-control" name="name" id="field_name" data-cy="name" formControlName="name" />
+          <div *ngIf="editForm.get('name')!.invalid && (editForm.get('name')!.dirty || editForm.get('name')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('name')?.errors?.required" jhiTranslate="entity.validation.required">
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="carMaintainanceApp.car.model" for="field_model">Model</label>
+          <input type="text" class="form-control" name="model" id="field_model" data-cy="model" formControlName="model" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="carMaintainanceApp.car.plate" for="field_plate">Plate</label>
+          <input type="text" class="form-control" name="plate" id="field_plate" data-cy="plate" formControlName="plate" />
+          <div *ngIf="editForm.get('plate')!.invalid && (editForm.get('plate')!.dirty || editForm.get('plate')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('plate')?.errors?.required" jhiTranslate="entity.validation.required">
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="carMaintainanceApp.car.user" for="field_user">User</label>
+          <select class="form-control" id="field_user" data-cy="user" name="user" formControlName="user" [compareWith]="compareUser">
+            <option *ngIf="!editForm.get('user')!.value" [ngValue]="null" selected></option>
+            <option [ngValue]="userOption" *ngFor="let userOption of usersSharedCollection">{{ userOption.login }}</option>
+          </select>
+        </div>
+        <div *ngIf="editForm.get(['user'])!.invalid && (editForm.get(['user'])!.dirty || editForm.get(['user'])!.touched)">
+          <small class="form-text text-danger" *ngIf="editForm.get(['user'])?.errors?.required" jhiTranslate="entity.validation.required">
+            This field is required.
+          </small>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="carMaintainanceApp.car.brand" for="field_brand">Brand</label>
+          <select class="form-control" id="field_brand" data-cy="brand" name="brand" formControlName="brand" [compareWith]="compareBrand">
+            <option *ngIf="!editForm.get('brand')!.value" [ngValue]="null" selected></option>
+            <option [ngValue]="brandOption" *ngFor="let brandOption of brandsSharedCollection">{{ brandOption.name }}</option>
+          </select>
+        </div>
+        <div *ngIf="editForm.get(['brand'])!.invalid && (editForm.get(['brand'])!.dirty || editForm.get(['brand'])!.touched)">
+          <small class="form-text text-danger" *ngIf="editForm.get(['brand'])?.errors?.required" jhiTranslate="entity.validation.required">
+            This field is required.
+          </small>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

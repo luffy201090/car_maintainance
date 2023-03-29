@@ -1,0 +1,25 @@
+{
+  "carMaintainanceApp": {
+    "corporation": {
+      "home": {
+        "title": "Corporations",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Corporation",
+        "createOrEditLabel": "Create or edit a Corporation",
+        "notFound": "No Corporations found"
+      },
+      "created": "A new Corporation is created with identifier {{ param }}",
+      "updated": "A Corporation is updated with identifier {{ param }}",
+      "deleted": "A Corporation is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Corporation {{ id }}?"
+      },
+      "detail": {
+        "title": "Corporation"
+      },
+      "id": "ID",
+      "name": "Name",
+      "description": "Description"
+    }
+  }
+}

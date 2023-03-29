@@ -1,0 +1,25 @@
+{
+  "carMaintainanceApp": {
+    "brand": {
+      "home": {
+        "title": "Brands",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Thêm mới một Brand",
+        "createOrEditLabel": "Thêm mới hoặc cập nhật Brand",
+        "notFound": "No Brands found"
+      },
+      "created": "Một Brand mới được tạo với định danh {{ param }}",
+      "updated": "Một Brand cập nhật với định danh {{ param }}",
+      "deleted": "Một Brand đã xóa với định danh {{ param }}",
+      "delete": {
+        "question": "Bạn có chắc là muốn xóa Brand {{ id }}?"
+      },
+      "detail": {
+        "title": "Brand"
+      },
+      "id": "ID",
+      "name": "Name",
+      "corporation": "Corporation"
+    }
+  }
+}

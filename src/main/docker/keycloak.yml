@@ -4,6 +4,7 @@ services:
   keycloak:
     image: quay.io/keycloak/keycloak:19.0.1
     command: ['start-dev --import-realm']
+    restart: always
     volumes:
       - ./realm-config:/opt/keycloak/data/import
     environment:

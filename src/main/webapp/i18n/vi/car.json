@@ -1,0 +1,28 @@
+{
+  "carMaintainanceApp": {
+    "car": {
+      "home": {
+        "title": "Cars",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Thêm mới một Car",
+        "createOrEditLabel": "Thêm mới hoặc cập nhật Car",
+        "notFound": "No Cars found"
+      },
+      "created": "Một Car mới được tạo với định danh {{ param }}",
+      "updated": "Một Car cập nhật với định danh {{ param }}",
+      "deleted": "Một Car đã xóa với định danh {{ param }}",
+      "delete": {
+        "question": "Bạn có chắc là muốn xóa Car {{ id }}?"
+      },
+      "detail": {
+        "title": "Car"
+      },
+      "id": "ID",
+      "name": "Name",
+      "model": "Model",
+      "plate": "Plate",
+      "user": "User",
+      "brand": "Brand"
+    }
+  }
+}

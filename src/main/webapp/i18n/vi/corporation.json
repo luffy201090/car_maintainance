@@ -1,0 +1,25 @@
+{
+  "carMaintainanceApp": {
+    "corporation": {
+      "home": {
+        "title": "Corporations",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Thêm mới một Corporation",
+        "createOrEditLabel": "Thêm mới hoặc cập nhật Corporation",
+        "notFound": "No Corporations found"
+      },
+      "created": "Một Corporation mới được tạo với định danh {{ param }}",
+      "updated": "Một Corporation cập nhật với định danh {{ param }}",
+      "deleted": "Một Corporation đã xóa với định danh {{ param }}",
+      "delete": {
+        "question": "Bạn có chắc là muốn xóa Corporation {{ id }}?"
+      },
+      "detail": {
+        "title": "Corporation"
+      },
+      "id": "ID",
+      "name": "Name",
+      "description": "Description"
+    }
+  }
+}

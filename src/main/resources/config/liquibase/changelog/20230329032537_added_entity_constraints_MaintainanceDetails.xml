@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <!--
+        Added the constraints for entity MaintainanceDetails.
+    -->
+    <changeSet id="20230329032537-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="maintainance_id"
+                                 baseTableName="maintainance_details"
+                                 constraintName="fk_maintainance_details__maintainance_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="maintainance"/>
+    </changeSet>
+</databaseChangeLog>

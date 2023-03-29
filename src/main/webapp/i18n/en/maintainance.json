@@ -1,0 +1,28 @@
+{
+  "carMaintainanceApp": {
+    "maintainance": {
+      "home": {
+        "title": "Maintainances",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Maintainance",
+        "createOrEditLabel": "Create or edit a Maintainance",
+        "notFound": "No Maintainances found"
+      },
+      "created": "A new Maintainance is created with identifier {{ param }}",
+      "updated": "A Maintainance is updated with identifier {{ param }}",
+      "deleted": "A Maintainance is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Maintainance {{ id }}?"
+      },
+      "detail": {
+        "title": "Maintainance"
+      },
+      "id": "ID",
+      "level": "Level",
+      "price": "Price",
+      "place": "Place",
+      "date": "Date",
+      "car": "Car"
+    }
+  }
+}

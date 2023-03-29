@@ -1,0 +1,28 @@
+{
+  "carMaintainanceApp": {
+    "maintainance": {
+      "home": {
+        "title": "Maintainances",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Thêm mới một Maintainance",
+        "createOrEditLabel": "Thêm mới hoặc cập nhật Maintainance",
+        "notFound": "No Maintainances found"
+      },
+      "created": "Một Maintainance mới được tạo với định danh {{ param }}",
+      "updated": "Một Maintainance cập nhật với định danh {{ param }}",
+      "deleted": "Một Maintainance đã xóa với định danh {{ param }}",
+      "delete": {
+        "question": "Bạn có chắc là muốn xóa Maintainance {{ id }}?"
+      },
+      "detail": {
+        "title": "Maintainance"
+      },
+      "id": "ID",
+      "level": "Level",
+      "price": "Price",
+      "place": "Place",
+      "date": "Date",
+      "car": "Car"
+    }
+  }
+}

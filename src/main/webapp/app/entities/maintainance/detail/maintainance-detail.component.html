@@ -1,0 +1,50 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="maintainance">
+      <h2 data-cy="maintainanceDetailsHeading"><span jhiTranslate="carMaintainanceApp.maintainance.detail.title">Maintainance</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ maintainance.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="carMaintainanceApp.maintainance.level">Level</span></dt>
+        <dd>
+          <span>{{ maintainance.level }}</span>
+        </dd>
+        <dt><span jhiTranslate="carMaintainanceApp.maintainance.price">Price</span></dt>
+        <dd>
+          <span>{{ maintainance.price }}</span>
+        </dd>
+        <dt><span jhiTranslate="carMaintainanceApp.maintainance.place">Place</span></dt>
+        <dd>
+          <span>{{ maintainance.place }}</span>
+        </dd>
+        <dt><span jhiTranslate="carMaintainanceApp.maintainance.date">Date</span></dt>
+        <dd>
+          <span>{{ maintainance.date | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="carMaintainanceApp.maintainance.car">Car</span></dt>
+        <dd>
+          <div *ngIf="maintainance.car">
+            <a [routerLink]="['/car', maintainance.car.id, 'view']">{{ maintainance.car.name }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/maintainance', maintainance.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>
