@@ -13,5 +13,11 @@
                                  constraintName="fk_maintainance_details__maintainance_id"
                                  referencedColumnNames="id"
                                  referencedTableName="maintainance"/>
+
+        <addForeignKeyConstraint baseColumnNames="user_id"
+                                 baseTableName="maintainance_details"
+                                 constraintName="fk_maintainance_details__user_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="jhi_user"/>
     </changeSet>
 </databaseChangeLog>

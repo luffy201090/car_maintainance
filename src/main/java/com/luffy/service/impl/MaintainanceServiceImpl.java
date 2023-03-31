@@ -3,6 +3,7 @@ package com.luffy.service.impl;
 import com.luffy.domain.Maintainance;
 import com.luffy.repository.MaintainanceRepository;
 import com.luffy.service.MaintainanceService;
+import com.luffy.service.UserService;
 import com.luffy.service.dto.MaintainanceDTO;
 import com.luffy.service.mapper.MaintainanceMapper;
 import java.util.Optional;
@@ -26,15 +27,19 @@ public class MaintainanceServiceImpl implements MaintainanceService {
 
     private final MaintainanceMapper maintainanceMapper;
 
-    public MaintainanceServiceImpl(MaintainanceRepository maintainanceRepository, MaintainanceMapper maintainanceMapper) {
+    private final UserService userService;
+
+    public MaintainanceServiceImpl(MaintainanceRepository maintainanceRepository, MaintainanceMapper maintainanceMapper, UserService userService) {
         this.maintainanceRepository = maintainanceRepository;
         this.maintainanceMapper = maintainanceMapper;
+        this.userService = userService;
     }
 
     @Override
     public MaintainanceDTO save(MaintainanceDTO maintainanceDTO) {
         log.debug("Request to save Maintainance : {}", maintainanceDTO);
         Maintainance maintainance = maintainanceMapper.toEntity(maintainanceDTO);
+        maintainance.setUser(userService.getCurrentUser());
         maintainance = maintainanceRepository.save(maintainance);
         return maintainanceMapper.toDto(maintainance);
     }

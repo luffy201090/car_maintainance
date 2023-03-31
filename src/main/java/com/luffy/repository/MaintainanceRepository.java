@@ -14,6 +14,9 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface MaintainanceRepository extends JpaRepository<Maintainance, Long>, JpaSpecificationExecutor<Maintainance> {
+    @Query("select maintainance from Maintainance maintainance where maintainance.user.login = ?#{principal.preferredUsername}")
+    List<Maintainance> findByUserIsCurrentUser();
+
     default Optional<Maintainance> findOneWithEagerRelationships(Long id) {
         return this.findOneWithToOneRelationships(id);
     }
@@ -27,14 +30,16 @@ public interface MaintainanceRepository extends JpaRepository<Maintainance, Long
     }
 
     @Query(
-        value = "select distinct maintainance from Maintainance maintainance left join fetch maintainance.car",
+        value = "select distinct maintainance from Maintainance maintainance left join fetch maintainance.car left join fetch maintainance.user",
         countQuery = "select count(distinct maintainance) from Maintainance maintainance"
     )
     Page<Maintainance> findAllWithToOneRelationships(Pageable pageable);
 
-    @Query("select distinct maintainance from Maintainance maintainance left join fetch maintainance.car")
+    @Query("select distinct maintainance from Maintainance maintainance left join fetch maintainance.car left join fetch maintainance.user")
     List<Maintainance> findAllWithToOneRelationships();
 
-    @Query("select maintainance from Maintainance maintainance left join fetch maintainance.car where maintainance.id =:id")
+    @Query(
+        "select maintainance from Maintainance maintainance left join fetch maintainance.car left join fetch maintainance.user where maintainance.id =:id"
+    )
     Optional<Maintainance> findOneWithToOneRelationships(@Param("id") Long id);
 }

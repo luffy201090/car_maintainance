@@ -15,6 +15,11 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface MaintainanceDetailsRepository
     extends JpaRepository<MaintainanceDetails, Long>, JpaSpecificationExecutor<MaintainanceDetails> {
+    @Query(
+        "select maintainanceDetails from MaintainanceDetails maintainanceDetails where maintainanceDetails.user.login = ?#{principal.preferredUsername}"
+    )
+    List<MaintainanceDetails> findByUserIsCurrentUser();
+
     default Optional<MaintainanceDetails> findOneWithEagerRelationships(Long id) {
         return this.findOneWithToOneRelationships(id);
     }
@@ -28,18 +33,18 @@ public interface MaintainanceDetailsRepository
     }
 
     @Query(
-        value = "select distinct maintainanceDetails from MaintainanceDetails maintainanceDetails left join fetch maintainanceDetails.maintainance",
+        value = "select distinct maintainanceDetails from MaintainanceDetails maintainanceDetails left join fetch maintainanceDetails.maintainance left join fetch maintainanceDetails.user",
         countQuery = "select count(distinct maintainanceDetails) from MaintainanceDetails maintainanceDetails"
     )
     Page<MaintainanceDetails> findAllWithToOneRelationships(Pageable pageable);
 
     @Query(
-        "select distinct maintainanceDetails from MaintainanceDetails maintainanceDetails left join fetch maintainanceDetails.maintainance"
+        "select distinct maintainanceDetails from MaintainanceDetails maintainanceDetails left join fetch maintainanceDetails.maintainance left join fetch maintainanceDetails.user"
     )
     List<MaintainanceDetails> findAllWithToOneRelationships();
 
     @Query(
-        "select maintainanceDetails from MaintainanceDetails maintainanceDetails left join fetch maintainanceDetails.maintainance where maintainanceDetails.id =:id"
+        "select maintainanceDetails from MaintainanceDetails maintainanceDetails left join fetch maintainanceDetails.maintainance left join fetch maintainanceDetails.user where maintainanceDetails.id =:id"
     )
     Optional<MaintainanceDetails> findOneWithToOneRelationships(@Param("id") Long id);
 }

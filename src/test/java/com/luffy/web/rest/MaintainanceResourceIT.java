@@ -11,6 +11,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.luffy.IntegrationTest;
 import com.luffy.domain.Car;
 import com.luffy.domain.Maintainance;
+import com.luffy.domain.User;
 import com.luffy.repository.MaintainanceRepository;
 import com.luffy.service.MaintainanceService;
 import com.luffy.service.criteria.MaintainanceCriteria;
@@ -106,6 +107,11 @@ class MaintainanceResourceIT {
             car = TestUtil.findAll(em, Car.class).get(0);
         }
         maintainance.setCar(car);
+        // Add required entity
+        User user = UserResourceIT.createEntity(em);
+        em.persist(user);
+        em.flush();
+        maintainance.setUser(user);
         return maintainance;
     }
 
@@ -127,6 +133,11 @@ class MaintainanceResourceIT {
             car = TestUtil.findAll(em, Car.class).get(0);
         }
         maintainance.setCar(car);
+        // Add required entity
+        User user = UserResourceIT.createEntity(em);
+        em.persist(user);
+        em.flush();
+        maintainance.setUser(user);
         return maintainance;
     }
 
@@ -634,6 +645,29 @@ class MaintainanceResourceIT {
 
         // Get all the maintainanceList where car equals to (carId + 1)
         defaultMaintainanceShouldNotBeFound("carId.equals=" + (carId + 1));
+    }
+
+    @Test
+    @Transactional
+    void getAllMaintainancesByUserIsEqualToSomething() throws Exception {
+        User user;
+        if (TestUtil.findAll(em, User.class).isEmpty()) {
+            maintainanceRepository.saveAndFlush(maintainance);
+            user = UserResourceIT.createEntity(em);
+        } else {
+            user = TestUtil.findAll(em, User.class).get(0);
+        }
+        em.persist(user);
+        em.flush();
+        maintainance.setUser(user);
+        maintainanceRepository.saveAndFlush(maintainance);
+        String userId = user.getId();
+
+        // Get all the maintainanceList where user equals to userId
+        defaultMaintainanceShouldBeFound("userId.equals=" + userId);
+
+        // Get all the maintainanceList where user equals to "invalid-id"
+        defaultMaintainanceShouldNotBeFound("userId.equals=" + "invalid-id");
     }
 
     /**

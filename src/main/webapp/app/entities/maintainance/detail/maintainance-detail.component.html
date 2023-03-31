@@ -36,6 +36,10 @@
             <a [routerLink]="['/car', maintainance.car.id, 'view']">{{ maintainance.car.name }}</a>
           </div>
         </dd>
+        <dt><span jhiTranslate="carMaintainanceApp.maintainance.user">User</span></dt>
+        <dd>
+          <span>{{ maintainance.user?.login }}</span>
+        </dd>
       </dl>
 
       <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">

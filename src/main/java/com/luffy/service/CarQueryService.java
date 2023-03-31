@@ -33,9 +33,12 @@ public class CarQueryService extends QueryService<Car> {
 
     private final CarMapper carMapper;
 
-    public CarQueryService(CarRepository carRepository, CarMapper carMapper) {
+    private final UserService userService;
+
+    public CarQueryService(CarRepository carRepository, CarMapper carMapper, UserService userService) {
         this.carRepository = carRepository;
         this.carMapper = carMapper;
+        this.userService = userService;
     }
 
     /**
@@ -102,6 +105,8 @@ public class CarQueryService extends QueryService<Car> {
             if (criteria.getUserId() != null) {
                 specification =
                     specification.and(buildSpecification(criteria.getUserId(), root -> root.join(Car_.user, JoinType.LEFT).get(User_.id)));
+            } else {
+                specification = (root, query, cb) -> cb.equal(root.join(Car_.user, JoinType.LEFT).get(User_.id), userService.getCurrentUser().getId());
             }
             if (criteria.getBrandId() != null) {
                 specification =

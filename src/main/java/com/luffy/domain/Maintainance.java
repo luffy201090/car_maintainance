@@ -42,6 +42,10 @@ public class Maintainance implements Serializable {
     @JsonIgnoreProperties(value = { "user", "brand" }, allowSetters = true)
     private Car car;
 
+    @ManyToOne(optional = false)
+    @NotNull
+    private User user;
+
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
     public Long getId() {
@@ -119,6 +123,19 @@ public class Maintainance implements Serializable {
 
     public Maintainance car(Car car) {
         this.setCar(car);
+        return this;
+    }
+
+    public User getUser() {
+        return this.user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Maintainance user(User user) {
+        this.setUser(user);
         return this;
     }
 

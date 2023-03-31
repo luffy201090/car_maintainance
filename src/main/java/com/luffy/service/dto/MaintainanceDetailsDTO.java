@@ -24,6 +24,8 @@ public class MaintainanceDetailsDTO implements Serializable {
 
     private MaintainanceDTO maintainance;
 
+    private UserDTO user;
+
     public Long getId() {
         return id;
     }
@@ -64,6 +66,14 @@ public class MaintainanceDetailsDTO implements Serializable {
         this.maintainance = maintainance;
     }
 
+    public UserDTO getUser() {
+        return user;
+    }
+
+    public void setUser(UserDTO user) {
+        this.user = user;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -94,6 +104,7 @@ public class MaintainanceDetailsDTO implements Serializable {
             ", action='" + getAction() + "'" +
             ", price=" + getPrice() +
             ", maintainance=" + getMaintainance() +
+            ", user=" + getUser() +
             "}";
     }
 }

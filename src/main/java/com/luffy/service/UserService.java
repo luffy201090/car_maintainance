@@ -11,6 +11,8 @@ import com.luffy.service.dto.UserDTO;
 import java.time.Instant;
 import java.util.*;
 import java.util.stream.Collectors;
+
+import com.luffy.web.rest.errors.EntityNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -63,6 +65,13 @@ public class UserService {
                 user.setImageUrl(imageUrl);
                 log.debug("Changed Information for User: {}", user);
             });
+    }
+
+    public User getCurrentUser() {
+        return SecurityUtils
+            .getCurrentUserLogin()
+            .flatMap(userRepository::findOneByLogin)
+            .orElseThrow(() -> new EntityNotFoundException(User.class.getSimpleName()));
     }
 
     @Transactional(readOnly = true)

@@ -3,6 +3,7 @@ package com.luffy.service.impl;
 import com.luffy.domain.MaintainanceDetails;
 import com.luffy.repository.MaintainanceDetailsRepository;
 import com.luffy.service.MaintainanceDetailsService;
+import com.luffy.service.UserService;
 import com.luffy.service.dto.MaintainanceDetailsDTO;
 import com.luffy.service.mapper.MaintainanceDetailsMapper;
 import java.util.Optional;
@@ -26,18 +27,22 @@ public class MaintainanceDetailsServiceImpl implements MaintainanceDetailsServic
 
     private final MaintainanceDetailsMapper maintainanceDetailsMapper;
 
+    private final UserService userService;
+
     public MaintainanceDetailsServiceImpl(
         MaintainanceDetailsRepository maintainanceDetailsRepository,
-        MaintainanceDetailsMapper maintainanceDetailsMapper
-    ) {
+        MaintainanceDetailsMapper maintainanceDetailsMapper,
+        UserService userService) {
         this.maintainanceDetailsRepository = maintainanceDetailsRepository;
         this.maintainanceDetailsMapper = maintainanceDetailsMapper;
+        this.userService = userService;
     }
 
     @Override
     public MaintainanceDetailsDTO save(MaintainanceDetailsDTO maintainanceDetailsDTO) {
         log.debug("Request to save MaintainanceDetails : {}", maintainanceDetailsDTO);
         MaintainanceDetails maintainanceDetails = maintainanceDetailsMapper.toEntity(maintainanceDetailsDTO);
+        maintainanceDetails.setUser(userService.getCurrentUser());
         maintainanceDetails = maintainanceDetailsRepository.save(maintainanceDetails);
         return maintainanceDetailsMapper.toDto(maintainanceDetails);
     }

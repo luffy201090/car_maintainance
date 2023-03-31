@@ -39,19 +39,6 @@
         </div>
 
         <div class="row mb-3">
-          <label class="form-label" jhiTranslate="carMaintainanceApp.car.user" for="field_user">User</label>
-          <select class="form-control" id="field_user" data-cy="user" name="user" formControlName="user" [compareWith]="compareUser">
-            <option *ngIf="!editForm.get('user')!.value" [ngValue]="null" selected></option>
-            <option [ngValue]="userOption" *ngFor="let userOption of usersSharedCollection">{{ userOption.login }}</option>
-          </select>
-        </div>
-        <div *ngIf="editForm.get(['user'])!.invalid && (editForm.get(['user'])!.dirty || editForm.get(['user'])!.touched)">
-          <small class="form-text text-danger" *ngIf="editForm.get(['user'])?.errors?.required" jhiTranslate="entity.validation.required">
-            This field is required.
-          </small>
-        </div>
-
-        <div class="row mb-3">
           <label class="form-label" jhiTranslate="carMaintainanceApp.car.brand" for="field_brand">Brand</label>
           <select class="form-control" id="field_brand" data-cy="brand" name="brand" formControlName="brand" [compareWith]="compareBrand">
             <option *ngIf="!editForm.get('brand')!.value" [ngValue]="null" selected></option>

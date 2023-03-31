@@ -33,6 +33,8 @@ public class MaintainanceCriteria implements Serializable, Criteria {
 
     private LongFilter carId;
 
+    private StringFilter userId;
+
     private Boolean distinct;
 
     public MaintainanceCriteria() {}
@@ -44,6 +46,7 @@ public class MaintainanceCriteria implements Serializable, Criteria {
         this.place = other.place == null ? null : other.place.copy();
         this.date = other.date == null ? null : other.date.copy();
         this.carId = other.carId == null ? null : other.carId.copy();
+        this.userId = other.userId == null ? null : other.userId.copy();
         this.distinct = other.distinct;
     }
 
@@ -142,6 +145,21 @@ public class MaintainanceCriteria implements Serializable, Criteria {
         this.carId = carId;
     }
 
+    public StringFilter getUserId() {
+        return userId;
+    }
+
+    public StringFilter userId() {
+        if (userId == null) {
+            userId = new StringFilter();
+        }
+        return userId;
+    }
+
+    public void setUserId(StringFilter userId) {
+        this.userId = userId;
+    }
+
     public Boolean getDistinct() {
         return distinct;
     }
@@ -166,13 +184,14 @@ public class MaintainanceCriteria implements Serializable, Criteria {
             Objects.equals(place, that.place) &&
             Objects.equals(date, that.date) &&
             Objects.equals(carId, that.carId) &&
+            Objects.equals(userId, that.userId) &&
             Objects.equals(distinct, that.distinct)
         );
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, level, price, place, date, carId, distinct);
+        return Objects.hash(id, level, price, place, date, carId, userId, distinct);
     }
 
     // prettier-ignore
@@ -185,6 +204,7 @@ public class MaintainanceCriteria implements Serializable, Criteria {
             (place != null ? "place=" + place + ", " : "") +
             (date != null ? "date=" + date + ", " : "") +
             (carId != null ? "carId=" + carId + ", " : "") +
+            (userId != null ? "userId=" + userId + ", " : "") +
             (distinct != null ? "distinct=" + distinct + ", " : "") +
             "}";
     }

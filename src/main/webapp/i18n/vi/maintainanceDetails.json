@@ -21,7 +21,8 @@
       "name": "Name",
       "action": "Action",
       "price": "Price",
-      "maintainance": "Maintainance"
+      "maintainance": "Maintainance",
+      "user": "User"
     }
   }
 }

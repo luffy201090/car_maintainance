@@ -33,12 +33,15 @@ public class MaintainanceDetailsQueryService extends QueryService<MaintainanceDe
 
     private final MaintainanceDetailsMapper maintainanceDetailsMapper;
 
+    private final UserService userService;
+
     public MaintainanceDetailsQueryService(
         MaintainanceDetailsRepository maintainanceDetailsRepository,
-        MaintainanceDetailsMapper maintainanceDetailsMapper
-    ) {
+        MaintainanceDetailsMapper maintainanceDetailsMapper,
+        UserService userService) {
         this.maintainanceDetailsRepository = maintainanceDetailsRepository;
         this.maintainanceDetailsMapper = maintainanceDetailsMapper;
+        this.userService = userService;
     }
 
     /**
@@ -110,6 +113,14 @@ public class MaintainanceDetailsQueryService extends QueryService<MaintainanceDe
                             root -> root.join(MaintainanceDetails_.maintainance, JoinType.LEFT).get(Maintainance_.id)
                         )
                     );
+            }
+            if (criteria.getUserId() != null) {
+                specification =
+                    specification.and(
+                        buildSpecification(criteria.getUserId(), root -> root.join(MaintainanceDetails_.user, JoinType.LEFT).get(User_.id))
+                    );
+            } else {
+                specification = (root, query, cb) -> cb.equal(root.join(MaintainanceDetails_.user, JoinType.LEFT).get(User_.id), userService.getCurrentUser().getId());
             }
         }
         return specification;

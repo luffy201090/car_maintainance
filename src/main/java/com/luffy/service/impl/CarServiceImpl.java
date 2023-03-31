@@ -3,6 +3,7 @@ package com.luffy.service.impl;
 import com.luffy.domain.Car;
 import com.luffy.repository.CarRepository;
 import com.luffy.service.CarService;
+import com.luffy.service.UserService;
 import com.luffy.service.dto.CarDTO;
 import com.luffy.service.mapper.CarMapper;
 import java.util.Optional;
@@ -26,15 +27,19 @@ public class CarServiceImpl implements CarService {
 
     private final CarMapper carMapper;
 
-    public CarServiceImpl(CarRepository carRepository, CarMapper carMapper) {
+    private final UserService userService;
+
+    public CarServiceImpl(CarRepository carRepository, CarMapper carMapper, UserService userService) {
         this.carRepository = carRepository;
         this.carMapper = carMapper;
+        this.userService = userService;
     }
 
     @Override
     public CarDTO save(CarDTO carDTO) {
         log.debug("Request to save Car : {}", carDTO);
         Car car = carMapper.toEntity(carDTO);
+        car.setUser(userService.getCurrentUser());
         car = carRepository.save(car);
         return carMapper.toDto(car);
     }

@@ -37,8 +37,12 @@ public class MaintainanceDetails implements Serializable {
 
     @ManyToOne(optional = false)
     @NotNull
-    @JsonIgnoreProperties(value = { "car" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "car", "user" }, allowSetters = true)
     private Maintainance maintainance;
+
+    @ManyToOne(optional = false)
+    @NotNull
+    private User user;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -104,6 +108,19 @@ public class MaintainanceDetails implements Serializable {
 
     public MaintainanceDetails maintainance(Maintainance maintainance) {
         this.setMaintainance(maintainance);
+        return this;
+    }
+
+    public User getUser() {
+        return this.user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public MaintainanceDetails user(User user) {
+        this.setUser(user);
         return this;
     }
 

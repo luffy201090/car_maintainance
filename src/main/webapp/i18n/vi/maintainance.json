@@ -22,7 +22,8 @@
       "price": "Price",
       "place": "Place",
       "date": "Date",
-      "car": "Car"
+      "car": "Car",
+      "user": "User"
     }
   }
 }

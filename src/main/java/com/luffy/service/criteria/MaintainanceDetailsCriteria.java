@@ -49,6 +49,8 @@ public class MaintainanceDetailsCriteria implements Serializable, Criteria {
 
     private LongFilter maintainanceId;
 
+    private StringFilter userId;
+
     private Boolean distinct;
 
     public MaintainanceDetailsCriteria() {}
@@ -59,6 +61,7 @@ public class MaintainanceDetailsCriteria implements Serializable, Criteria {
         this.action = other.action == null ? null : other.action.copy();
         this.price = other.price == null ? null : other.price.copy();
         this.maintainanceId = other.maintainanceId == null ? null : other.maintainanceId.copy();
+        this.userId = other.userId == null ? null : other.userId.copy();
         this.distinct = other.distinct;
     }
 
@@ -142,6 +145,21 @@ public class MaintainanceDetailsCriteria implements Serializable, Criteria {
         this.maintainanceId = maintainanceId;
     }
 
+    public StringFilter getUserId() {
+        return userId;
+    }
+
+    public StringFilter userId() {
+        if (userId == null) {
+            userId = new StringFilter();
+        }
+        return userId;
+    }
+
+    public void setUserId(StringFilter userId) {
+        this.userId = userId;
+    }
+
     public Boolean getDistinct() {
         return distinct;
     }
@@ -165,13 +183,14 @@ public class MaintainanceDetailsCriteria implements Serializable, Criteria {
             Objects.equals(action, that.action) &&
             Objects.equals(price, that.price) &&
             Objects.equals(maintainanceId, that.maintainanceId) &&
+            Objects.equals(userId, that.userId) &&
             Objects.equals(distinct, that.distinct)
         );
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, action, price, maintainanceId, distinct);
+        return Objects.hash(id, name, action, price, maintainanceId, userId, distinct);
     }
 
     // prettier-ignore
@@ -183,6 +202,7 @@ public class MaintainanceDetailsCriteria implements Serializable, Criteria {
             (action != null ? "action=" + action + ", " : "") +
             (price != null ? "price=" + price + ", " : "") +
             (maintainanceId != null ? "maintainanceId=" + maintainanceId + ", " : "") +
+            (userId != null ? "userId=" + userId + ", " : "") +
             (distinct != null ? "distinct=" + distinct + ", " : "") +
             "}";
     }

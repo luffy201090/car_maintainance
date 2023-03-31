@@ -11,6 +11,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.luffy.IntegrationTest;
 import com.luffy.domain.Maintainance;
 import com.luffy.domain.MaintainanceDetails;
+import com.luffy.domain.User;
 import com.luffy.domain.enumeration.Action;
 import com.luffy.repository.MaintainanceDetailsRepository;
 import com.luffy.service.MaintainanceDetailsService;
@@ -101,6 +102,11 @@ class MaintainanceDetailsResourceIT {
             maintainance = TestUtil.findAll(em, Maintainance.class).get(0);
         }
         maintainanceDetails.setMaintainance(maintainance);
+        // Add required entity
+        User user = UserResourceIT.createEntity(em);
+        em.persist(user);
+        em.flush();
+        maintainanceDetails.setUser(user);
         return maintainanceDetails;
     }
 
@@ -122,6 +128,11 @@ class MaintainanceDetailsResourceIT {
             maintainance = TestUtil.findAll(em, Maintainance.class).get(0);
         }
         maintainanceDetails.setMaintainance(maintainance);
+        // Add required entity
+        User user = UserResourceIT.createEntity(em);
+        em.persist(user);
+        em.flush();
+        maintainanceDetails.setUser(user);
         return maintainanceDetails;
     }
 
@@ -509,6 +520,29 @@ class MaintainanceDetailsResourceIT {
 
         // Get all the maintainanceDetailsList where maintainance equals to (maintainanceId + 1)
         defaultMaintainanceDetailsShouldNotBeFound("maintainanceId.equals=" + (maintainanceId + 1));
+    }
+
+    @Test
+    @Transactional
+    void getAllMaintainanceDetailsByUserIsEqualToSomething() throws Exception {
+        User user;
+        if (TestUtil.findAll(em, User.class).isEmpty()) {
+            maintainanceDetailsRepository.saveAndFlush(maintainanceDetails);
+            user = UserResourceIT.createEntity(em);
+        } else {
+            user = TestUtil.findAll(em, User.class).get(0);
+        }
+        em.persist(user);
+        em.flush();
+        maintainanceDetails.setUser(user);
+        maintainanceDetailsRepository.saveAndFlush(maintainanceDetails);
+        String userId = user.getId();
+
+        // Get all the maintainanceDetailsList where user equals to userId
+        defaultMaintainanceDetailsShouldBeFound("userId.equals=" + userId);
+
+        // Get all the maintainanceDetailsList where user equals to "invalid-id"
+        defaultMaintainanceDetailsShouldNotBeFound("userId.equals=" + "invalid-id");
     }
 
     /**

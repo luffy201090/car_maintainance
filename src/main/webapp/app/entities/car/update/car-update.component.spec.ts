@@ -183,16 +183,6 @@ describe('Car Management Update Component', () => {
   });
 
   describe('Compare relationships', () => {
-    describe('compareUser', () => {
-      it('Should forward to userService', () => {
-        const entity = { id: 'ABC' };
-        const entity2 = { id: 'CBA' };
-        jest.spyOn(userService, 'compareUser');
-        comp.compareUser(entity, entity2);
-        expect(userService.compareUser).toHaveBeenCalledWith(entity, entity2);
-      });
-    });
-
     describe('compareBrand', () => {
       it('Should forward to brandService', () => {
         const entity = { id: 123 };

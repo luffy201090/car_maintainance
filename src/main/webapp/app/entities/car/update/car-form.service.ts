@@ -21,7 +21,6 @@ type CarFormGroupContent = {
   name: FormControl<ICar['name']>;
   model: FormControl<ICar['model']>;
   plate: FormControl<ICar['plate']>;
-  user: FormControl<ICar['user']>;
   brand: FormControl<ICar['brand']>;
 };
 
@@ -47,9 +46,6 @@ export class CarFormService {
       }),
       model: new FormControl(carRawValue.model),
       plate: new FormControl(carRawValue.plate, {
-        validators: [Validators.required],
-      }),
-      user: new FormControl(carRawValue.user, {
         validators: [Validators.required],
       }),
       brand: new FormControl(carRawValue.brand, {
