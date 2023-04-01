@@ -20,6 +20,16 @@
     </div>
   </h2>
 
+  <h3>
+    <div class="row mb-3">
+      <label class="form-label" jhiTranslate="carMaintainanceApp.maintainance.filterByCar" for="field_car"></label>
+      <select class="form-control" id="field_car" [(ngModel)]="selectedCar">
+        <option [ngValue]="null" selected>All</option>
+        <option [ngValue]="carOption" *ngFor="let carOption of carsSharedCollection">{{ carOption.name }}</option>
+      </select>
+    </div>
+  </h3>
+
   <jhi-alert-error></jhi-alert-error>
 
   <jhi-alert></jhi-alert>

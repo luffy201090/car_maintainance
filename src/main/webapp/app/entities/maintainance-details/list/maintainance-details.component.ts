@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpHeaders } from '@angular/common/http';
+import {HttpHeaders, HttpResponse} from '@angular/common/http';
 import { ActivatedRoute, Data, ParamMap, Router } from '@angular/router';
 import { combineLatest, filter, Observable, switchMap, tap } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -11,6 +11,9 @@ import { ASC, DESC, SORT, ITEM_DELETED_EVENT, DEFAULT_SORT_DATA } from 'app/conf
 import { EntityArrayResponseType, MaintainanceDetailsService } from '../service/maintainance-details.service';
 import { MaintainanceDetailsDeleteDialogComponent } from '../delete/maintainance-details-delete-dialog.component';
 import { FilterOptions, IFilterOptions, IFilterOption } from 'app/shared/filter/filter.model';
+import {IMaintainance} from "../../maintainance/maintainance.model";
+import {MaintainanceService} from "../../maintainance/service/maintainance.service";
+import {map} from "rxjs/operators";
 
 @Component({
   selector: 'jhi-maintainance-details',
@@ -27,18 +30,21 @@ export class MaintainanceDetailsComponent implements OnInit {
   itemsPerPage = ITEMS_PER_PAGE;
   totalItems = 0;
   page = 1;
+  maintainancesSharedCollection: IMaintainance[] = [];
+  selectedMaintainance!: IMaintainance;
 
   constructor(
     protected maintainanceDetailsService: MaintainanceDetailsService,
     protected activatedRoute: ActivatedRoute,
     public router: Router,
-    protected modalService: NgbModal
+    protected modalService: NgbModal,
+    protected maintainanceService: MaintainanceService,
   ) {}
 
   trackId = (_index: number, item: IMaintainanceDetails): number => this.maintainanceDetailsService.getMaintainanceDetailsIdentifier(item);
 
   ngOnInit(): void {
-    this.load();
+    this.firstLoad();
 
     this.filters.filterChanges.subscribe(filterOptions => this.handleNavigation(1, this.predicate, this.ascending, filterOptions));
   }
@@ -65,6 +71,25 @@ export class MaintainanceDetailsComponent implements OnInit {
         this.onResponseSuccess(res);
       },
     });
+  }
+
+  firstLoad(): void {
+    this.maintainanceService
+      .query()
+      .pipe(map((res: HttpResponse<IMaintainance[]>) => res.body ?? []))
+      .subscribe((maintainances: IMaintainance[]) => {
+        this.maintainancesSharedCollection = maintainances;
+
+        if (maintainances.length > 0) {
+          this.selectedMaintainance = maintainances[0]
+        }
+
+        this.loadFromBackendWithRouteInformations().subscribe({
+          next: (res: EntityArrayResponseType) => {
+            this.onResponseSuccess(res);
+          },
+        });
+      });
   }
 
   navigateToWithComponentValues(): void {
@@ -118,6 +143,7 @@ export class MaintainanceDetailsComponent implements OnInit {
       size: this.itemsPerPage,
       eagerload: true,
       sort: this.getSortQueryParam(predicate, ascending),
+      "maintainanceId.equals": this.selectedMaintainance ? this.selectedMaintainance.id : null
     };
     filterOptions?.forEach(filterOption => {
       queryObject[filterOption.name] = filterOption.values;

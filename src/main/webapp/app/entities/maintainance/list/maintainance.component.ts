@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpHeaders } from '@angular/common/http';
+import {HttpHeaders, HttpResponse} from '@angular/common/http';
 import { ActivatedRoute, Data, ParamMap, Router } from '@angular/router';
 import { combineLatest, filter, Observable, switchMap, tap } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -11,6 +11,9 @@ import { ASC, DESC, SORT, ITEM_DELETED_EVENT, DEFAULT_SORT_DATA } from 'app/conf
 import { EntityArrayResponseType, MaintainanceService } from '../service/maintainance.service';
 import { MaintainanceDeleteDialogComponent } from '../delete/maintainance-delete-dialog.component';
 import { FilterOptions, IFilterOptions, IFilterOption } from 'app/shared/filter/filter.model';
+import {CarService} from "../../car/service/car.service";
+import {ICar} from "../../car/car.model";
+import {map} from "rxjs/operators";
 
 @Component({
   selector: 'jhi-maintainance',
@@ -27,20 +30,30 @@ export class MaintainanceComponent implements OnInit {
   itemsPerPage = ITEMS_PER_PAGE;
   totalItems = 0;
   page = 1;
+  carsSharedCollection: ICar[] = [];
+  selectedCar: ICar | null = null;
 
   constructor(
     protected maintainanceService: MaintainanceService,
     protected activatedRoute: ActivatedRoute,
     public router: Router,
-    protected modalService: NgbModal
+    protected modalService: NgbModal,
+    protected carService: CarService,
   ) {}
 
   trackId = (_index: number, item: IMaintainance): number => this.maintainanceService.getMaintainanceIdentifier(item);
 
   ngOnInit(): void {
+    this.loadCars();
     this.load();
-
     this.filters.filterChanges.subscribe(filterOptions => this.handleNavigation(1, this.predicate, this.ascending, filterOptions));
+  }
+
+  private loadCars() {
+    this.carService
+      .query()
+      .pipe(map((res: HttpResponse<ICar[]>) => res.body ?? []))
+      .subscribe((cars: ICar[]) => (this.carsSharedCollection = cars));
   }
 
   delete(maintainance: IMaintainance): void {
@@ -118,6 +131,7 @@ export class MaintainanceComponent implements OnInit {
       size: this.itemsPerPage,
       eagerload: true,
       sort: this.getSortQueryParam(predicate, ascending),
+      "carId.equals": this.selectedCar ? this.selectedCar.id : null
     };
     filterOptions?.forEach(filterOption => {
       queryObject[filterOption.name] = filterOption.values;

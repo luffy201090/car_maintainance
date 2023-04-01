@@ -106,7 +106,7 @@ public class CarQueryService extends QueryService<Car> {
                 specification =
                     specification.and(buildSpecification(criteria.getUserId(), root -> root.join(Car_.user, JoinType.LEFT).get(User_.id)));
             } else {
-                specification = (root, query, cb) -> cb.equal(root.join(Car_.user, JoinType.LEFT).get(User_.id), userService.getCurrentUser().getId());
+                specification = specification.and((root, query, cb) -> cb.equal(root.join(Car_.user, JoinType.LEFT).get(User_.id), userService.getCurrentUser().getId()));
             }
             if (criteria.getBrandId() != null) {
                 specification =

@@ -23,7 +23,8 @@
       "place": "Place",
       "date": "Date",
       "car": "Car",
-      "user": "User"
+      "user": "User",
+      "filterByCar": "Filter By Car"
     }
   }
 }

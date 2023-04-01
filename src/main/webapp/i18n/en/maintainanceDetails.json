@@ -22,7 +22,8 @@
       "action": "Action",
       "price": "Price",
       "maintainance": "Maintainance",
-      "user": "User"
+      "user": "User",
+      "filterByMaintainance": "Filter By Maintainance"
     }
   }
 }

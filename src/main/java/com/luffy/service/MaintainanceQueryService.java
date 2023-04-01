@@ -117,9 +117,8 @@ public class MaintainanceQueryService extends QueryService<Maintainance> {
                         buildSpecification(criteria.getUserId(), root -> root.join(Maintainance_.user, JoinType.LEFT).get(User_.id))
                     );
             } else {
-                specification = (root, query, cb) -> cb.equal(root.join(Maintainance_.user, JoinType.LEFT).get(User_.id), userService.getCurrentUser().getId());
-            }
-        }
+                specification = specification.and((root, query, cb) -> cb.equal(root.join(Maintainance_.user, JoinType.LEFT).get(User_.id), userService.getCurrentUser().getId()));
+            }        }
         return specification;
     }
 }
